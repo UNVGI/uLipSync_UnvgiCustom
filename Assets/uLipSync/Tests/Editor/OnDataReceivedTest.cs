@@ -203,6 +203,43 @@ public class OnDataReceivedTest
 
         mock.StopRecord();
     }
+
+    [Test]
+    public void OnEnable_CachesOutputSampleRate()
+    {
+        var field = typeof(uLipSync).GetField("_cachedOutputSampleRate", BindingFlags.NonPublic | BindingFlags.Instance);
+        int cached = (int)field.GetValue(_lipSync);
+        Assert.AreEqual(AudioSettings.outputSampleRate, cached);
+    }
+
+    [Test]
+    public void OnAudioFilterRead_DoesNotReadAudioSettingsFromNonMainThread()
+    {
+        var method = typeof(uLipSync).GetMethod("OnAudioFilterRead", BindingFlags.NonPublic | BindingFlags.Instance);
+        Assert.IsNotNull(method, "OnAudioFilterRead method not found via reflection");
+
+        System.Exception caught = null;
+        var thread = new System.Threading.Thread(() =>
+        {
+            try
+            {
+                float[] samples = new float[] { 0.1f, 0.2f };
+                method.Invoke(_lipSync, new object[] { samples, 1 });
+            }
+            catch (System.Reflection.TargetInvocationException tie)
+            {
+                caught = tie.InnerException;
+            }
+            catch (System.Exception ex)
+            {
+                caught = ex;
+            }
+        });
+        thread.Start();
+        thread.Join();
+
+        Assert.IsNull(caught, $"OnAudioFilterRead threw from non-main thread: {caught}");
+    }
 }
 
 }
