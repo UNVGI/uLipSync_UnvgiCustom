@@ -23,7 +23,7 @@ public class uLipSync : MonoBehaviour
     int _index = 0;
     bool _isDataReceived = false;
     int _cachedSampleRate = 0;
-    [System.NonSerialized] int _cachedOutputSampleRate = 0;
+    [System.NonSerialized] volatile int _cachedOutputSampleRate = 0;
 
     NativeArray<float> _rawInputData;
     NativeArray<float> _inputData;

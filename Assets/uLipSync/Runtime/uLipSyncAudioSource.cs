@@ -8,7 +8,7 @@ public class uLipSyncAudioSource : MonoBehaviour
 {
     public AudioFilterReadEvent onAudioFilterRead { get; private set; } = new AudioFilterReadEvent();
 
-    [System.NonSerialized] int _cachedOutputSampleRate = 0;
+    [System.NonSerialized] volatile int _cachedOutputSampleRate = 0;
 
     void OnEnable()
     {
