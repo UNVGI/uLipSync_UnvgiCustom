@@ -1,11 +1,10 @@
 {
-    "name": "com.hidano.ulipsync-asio",
+    "name": "jp.co.unvgi.ulipsync-asio",
     "version": "3.1.5-custom.2",
     "displayName": "uLipSync (ASIO Fork)",
     "description": "A MFCC-based LipSync plugin for Unity using Job and Burst Compiler. Forked to add ASIO low-latency audio input on Windows.",
     "author": {
-        "name": "Hidano",
-        "url": "https://github.com/Hidano-Dev"
+        "name": "UNVGI Inc."
     },
     "contributors": [
         {
@@ -15,7 +14,7 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/Hidano-Dev/uLipSyncCustom"
+        "url": "https://github.com/UNVGI/uLipSyncUnvgiCustom.git"
     },
     "dependencies": {
         "com.unity.burst": "1.4.11",
