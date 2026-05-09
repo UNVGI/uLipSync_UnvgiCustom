@@ -235,9 +235,11 @@ public class OnDataReceivedTest
                 caught = ex;
             }
         });
+        thread.IsBackground = true;
         thread.Start();
-        thread.Join();
+        var completed = thread.Join(1000);
 
+        Assert.IsTrue(completed, "OnAudioFilterRead did not complete within the timeout.");
         Assert.IsNull(caught, $"OnAudioFilterRead threw from non-main thread: {caught}");
     }
 }
